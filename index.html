@@ -100,7 +100,7 @@ document.getElementById("app").innerHTML=`
 <section class="section container" id="archive"><div class="section-head"><h2>Curiosities</h2></div><div class="grid" id="grid"></div></section>
 <section class="about container" id="about"><div><div class="eyebrow">About the author</div><h2>Hi, I'm the person behind the questions.</h2></div><div class="about-box">${esc(data.site.about)}</div></section>
 <section class="newsletter container" id="newsletter"><div><div class="eyebrow">Keep wondering</div><h2>Get the next why.</h2><p>A tiny dose of curiosity, whenever a new article goes up.</p></div><form class="form" onsubmit="event.preventDefault();alert('You’re on the list ✨ (connect this form to your email service when you’re ready)')"><input type="email" required placeholder="your@email.com"><button class="btn">Subscribe</button></form></section>
-</main><footer class="container footer"><span>© ${new Date().getFullYear()} The Why Behind</span><span>Made out of curiosity.</span></footer>
+</main><footer class="container footer"><span>© 2024 The Why Behind</span><span>Made out of curiosity.</span></footer>
 ${isAdmin()?`<button class="admin-fab" onclick="openEditor()">✦ Edit site</button>`:""}`;
 renderPosts();
 }
