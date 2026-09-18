@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Why Behind</title>
+<style>
+:root{--bg:#f7f4ee;--paper:#fffdf8;--ink:#24221e;--muted:#777169;--line:#ded8cd;--accent:#c96d43;--soft:#ead9cc;--radius:22px;--shadow:0 18px 50px rgba(39,31,22,.08)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:"DM Sans",sans-serif;line-height:1.6}button,input,textarea,select{font:inherit}button{cursor:pointer}a{color:inherit}
+.container{width:min(1160px,calc(100% - 40px));margin:auto}.topbar{padding:22px 0;border-bottom:1px solid var(--line)}.nav{display:flex;justify-content:space-between;align-items:center}.logo{text-decoration:none;font-weight:700;font-size:21px;letter-spacing:-.04em}.navlinks{display:flex;gap:25px}.navlinks a{text-decoration:none;color:var(--muted);font-size:14px}.navlinks a:hover{color:var(--ink)}
+.hero{padding:95px 0 75px;display:grid;grid-template-columns:1.15fr .85fr;gap:65px;align-items:center}.eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:11px;color:var(--muted);font-weight:700}h1,h2,h3{line-height:1.08;letter-spacing:-.045em;margin:0}h1{font:500 clamp(56px,8vw,105px)/1 "Playfair Display",serif}.hero p{font-size:18px;max-width:600px;color:var(--muted);margin-top:25px}
+.blob{min-height:310px;background:var(--soft);border-radius:53% 47% 45% 55%;display:grid;place-items:center;transform:rotate(3deg)}.blob div{transform:rotate(-3deg);font:500 31px/1.2 "Playfair Display",serif;text-align:center;max-width:300px}
+.section{padding:55px 0}.section-head{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:25px}.section h2{font:500 41px "Playfair Display",serif}.filters{display:flex;gap:8px;flex-wrap:wrap}.chip{border:1px solid var(--line);background:transparent;border-radius:99px;padding:8px 14px;color:var(--muted)}.chip.active,.chip:hover{background:var(--ink);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;transition:.2s}.card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}.card-img{aspect-ratio:1.35;background:var(--soft);overflow:hidden}.card-img img{width:100%;height:100%;object-fit:cover}.card-body{padding:22px}.meta{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em}.card h3{font:500 27px/1.08 "Playfair Display",serif;margin:10px 0}.card p{color:var(--muted);margin:0}.read{display:inline-block;margin-top:17px;text-decoration:none;font-size:13px;font-weight:700}
+.about{padding:95px 0;display:grid;grid-template-columns:.75fr 1.25fr;gap:60px}.about h2{font:500 56px "Playfair Display",serif}.about p{font-size:18px;color:var(--muted)}.about-box{background:var(--paper);border:1px solid var(--line);padding:35px;border-radius:var(--radius);font-size:20px}
+.newsletter{background:var(--ink);color:#fff;border-radius:30px;padding:55px;display:grid;grid-template-columns:1fr 1fr;gap:30px;margin:30px auto 80px}.newsletter p{color:#c9c5bd}.form{display:flex;gap:8px}.form input{flex:1;min-width:0;border:0;border-radius:99px;padding:14px 18px}.btn{border:0;border-radius:99px;padding:13px 18px;background:var(--accent);color:#fff;font-weight:700}.footer{padding:35px 0 55px;color:var(--muted);font-size:13px;display:flex;justify-content:space-between}
+.modal,.editor{position:fixed;inset:0;z-index:20}.modal{background:#181613aa;display:grid;place-items:center;padding:20px}.modal-card{background:var(--paper);width:min(850px,100%);max-height:90vh;overflow:auto;border-radius:26px;padding:30px;position:relative}.close{position:absolute;right:18px;top:15px;border:0;background:none;font-size:25px}.article h1{font-size:58px;margin:8px 0 20px}.article .cover{width:100%;max-height:430px;object-fit:cover;border-radius:18px}.article-content{font:20px/1.75 "Playfair Display",serif;white-space:pre-wrap}
+.editor{background:var(--bg);overflow:auto;padding:30px}.editor-inner{width:min(1100px,100%);margin:auto}.editor-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px}.editor-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.field{display:grid;gap:7px;margin-bottom:15px}.field label{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}.field input,.field textarea,.field select{width:100%;padding:12px;border:1px solid var(--line);border-radius:12px;background:#fff}.field textarea{min-height:150px;resize:vertical}.editor-list{display:grid;gap:10px;margin-top:20px}.edit-row{background:var(--paper);border:1px solid var(--line);padding:15px;border-radius:15px;display:flex;justify-content:space-between;gap:12px;align-items:center}.secondary{background:transparent;color:var(--ink);border:1px solid var(--line)}.danger{background:#8f3c35}.admin-fab{position:fixed;right:20px;bottom:20px;z-index:10;border:1px solid var(--line);background:var(--paper);border-radius:99px;padding:11px 15px;box-shadow:var(--shadow)}.hidden{display:none!important}
+@media(max-width:800px){.hero,.about,.newsletter{grid-template-columns:1fr}.hero{padding-top:55px}.grid{grid-template-columns:1fr}.navlinks{display:none}.newsletter{padding:30px}.editor-grid{grid-template-columns:1fr}}
+@media(max-width:560px){.container{width:calc(100% - 32px)}h1{font-size:42px}.hero{padding:40px 0 45px;gap:35px}.hero p{font-size:16px}.blob{min-height:200px}.blob div{font-size:22px}.section{padding:35px 0}.section-head{flex-direction:column;align-items:start;gap:10px}.section h2{font-size:30px}.about{padding:50px 0}.about h2{font-size:32px}.about-box{padding:24px;font-size:17px}.card h3{font-size:22px}.newsletter{padding:24px;border-radius:20px}.form{flex-direction:column}.form input,.form .btn{width:100%}.article h1{font-size:32px}.article-content{font-size:16px}.modal-card{padding:20px}.footer{flex-direction:column;gap:6px;text-align:center}.admin-fab{right:14px;bottom:14px;padding:10px 13px;font-size:14px}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+
+const KEY="the-why-behind-v1";
+const starter={site:{name:"The Why Behind",tagline:"A living collection of curiosity.",intro:"I’ve always been a little too curious about the things everyone else seems to accept without question. This is where I chase the why behind them.",about:"I’m a student who likes asking inconveniently specific questions — especially when physics, engineering and everyday life collide. The Why Behind is basically my excuse to keep following those questions.",heroNote:"There’s usually a why hiding behind the obvious."},posts:[
+{id:1,cat:"Physics",title:"Why can a plane fly upside down?",excerpt:"Lift, angle of attack and what actually keeps an aircraft in the air.",date:"September 2026",image:"",body:"We usually picture lift as something that simply points upward. But flight is more interesting than that.\\n\\nStart with angle of attack, then look at how the wing changes the momentum of surrounding air. In inverted flight, the aircraft can still generate the required lift by changing its attitude and angle of attack.\\n\\nThe surprising part: a wing does not need to be the right way up to produce lift."},
+{id:2,cat:"Everyday Physics",title:"Why doesn’t lightning fry fish?",excerpt:"How electrical current spreads through conductive seawater.",date:"September 2026",image:"",body:"When lightning reaches the ocean, the current does not travel through every part of the water equally. Electrical current tends to spread through the conducting surface layers and over a large area.\\n\\nThat rapid spreading means the current density falls dramatically with distance from the strike point. The ocean is still dangerous near a strike, but the effect is not the same as plugging an entire ecosystem into a circuit."},
+{id:3,cat:"Engineering",title:"Why do cars have suspension?",excerpt:"The tiny mechanical system doing much more than making a ride comfortable.",date:"August 2026",image:"",body:"A car suspension has a deceptively difficult job: keep the tyres in contact with the road while controlling the motion of the vehicle body.\\n\\nSprings store and release energy, while dampers control how quickly that motion happens. The result is a compromise between comfort, grip and stability."}
+]};
+let data=JSON.parse(localStorage.getItem(KEY)||"null")||starter;
+const save=()=>localStorage.setItem(KEY,JSON.stringify(data));
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
+const ADMIN_KEY="the-why-behind-admin";
+const ADMIN_PASSWORD="whybehind2026"; // change this before you publish the site
+function isAdmin(){return localStorage.getItem(ADMIN_KEY)==="1"}
+function checkAdminUnlock(){
+let params=new URLSearchParams(location.search);
+if(params.get("admin")==="1"&&!isAdmin()){
+let pass=prompt("Enter admin password to enable editing on this browser:");
+if(pass===ADMIN_PASSWORD){localStorage.setItem(ADMIN_KEY,"1");alert("Admin mode enabled on this browser. The ✦ Edit site button will now appear for you here.")}
+else if(pass!==null){alert("Incorrect password.")}
+history.replaceState({},"",location.pathname+location.hash);
+}
+}
+function logoutAdmin(){localStorage.removeItem(ADMIN_KEY);document.getElementById("editor")?.remove();render();}
+function getPostIdFromURL(){
+let id=new URLSearchParams(location.search).get("post");
+return id?Number(id):null;
+}
+function render(){
+let postId=getPostIdFromURL();
+if(postId){renderArticlePage(postId);return;}
+document.getElementById("app").innerHTML=`
+<header class="topbar"><div class="container nav"><a class="logo" href="#">The Why Behind</a><nav class="navlinks"><a href="#archive">Archive</a><a href="#about">About</a><a href="#newsletter">Subscribe</a></nav></div></header>
+<main>
+<section class="hero container"><div><div class="eyebrow">Questions worth following</div><h1>The Why Behind</h1><p>${esc(data.site.intro)}</p></div><div class="blob"><div>${esc(data.site.heroNote)}</div></div></section>
+<section class="section container" id="archive"><div class="section-head"><h2>Curiosities</h2></div><div class="grid" id="grid"></div></section>
+<section class="about container" id="about"><div><div class="eyebrow">About the author</div><h2>Hi, I'm the person behind the questions.</h2></div><div class="about-box">${esc(data.site.about)}</div></section>
+<section class="newsletter container" id="newsletter"><div><div class="eyebrow">Keep wondering</div><h2>Get the next why.</h2><p>A tiny dose of curiosity, whenever a new article goes up.</p></div><form class="form" onsubmit="event.preventDefault();alert('You’re on the list ✨ (connect this form to your email service when you’re ready)')"><input type="email" required placeholder="your@email.com"><button class="btn">Subscribe</button></form></section>
+</main><footer class="container footer"><span>© ${new Date().getFullYear()} The Why Behind</span><span>Made out of curiosity.</span></footer>
+${isAdmin()?`<button class="admin-fab" onclick="openEditor()">✦ Edit site</button>`:""}`;
+renderPosts();
+}
+function renderPosts(){
+document.getElementById("grid").innerHTML=data.posts.map(p=>`<article class="card"><div class="card-img">${p.image?`<img src="${esc(p.image)}" alt="">`:""}</div><div class="card-body"><div class="meta">${esc(p.cat)} · ${esc(p.date)}</div><h3>${esc(p.title)}</h3><p>${esc(p.excerpt)}</p><a class="read" href="?post=${p.id}" target="_blank" rel="noopener">Read →</a></div></article>`).join("");
+}
+function renderArticlePage(id){
+let p=data.posts.find(x=>x.id===id);
+if(!p){document.getElementById("app").innerHTML=`<div class="container" style="padding:60px 0"><p>Post not found.</p><a class="read" href="?">← Back to all posts</a></div>`;return;}
+document.getElementById("app").innerHTML=`
+<header class="topbar"><div class="container nav"><a class="logo" href="?">The Why Behind</a><nav class="navlinks"><a href="?#archive">Archive</a><a href="?#about">About</a><a href="?#newsletter">Subscribe</a></nav></div></header>
+<main><section class="container" style="padding:55px 0">
+<a class="read" href="?">← Back to all posts</a>
+<div class="article" style="margin-top:20px"><div class="meta">${esc(p.cat)} · ${esc(p.date)}</div><h1>${esc(p.title)}</h1>${p.image?`<img class="cover" src="${esc(p.image)}">`:""}<div class="article-content">${esc(p.body)}</div></div>
+</section></main>
+<footer class="container footer"><span>© ${new Date().getFullYear()} The Why Behind</span><span>Made out of curiosity.</span></footer>`;
+}
+function openEditor(){
+let e=document.createElement("div");e.className="editor";e.id="editor";
+e.innerHTML=`<div class="editor-inner"><div class="editor-top"><div><div class="eyebrow">Site editor</div><h2>Edit The Why Behind</h2></div><div style="display:flex;gap:10px"><button class="btn secondary" onclick="logoutAdmin()">Log out of admin</button><button class="btn secondary" onclick="document.getElementById('editor').remove()">Close</button></div></div>
+<h3>Site settings</h3><div class="editor-grid">
+<div class="field"><label>Site tagline</label><input id="tagline" value="${esc(data.site.tagline)}"></div>
+<div class="field"><label>Hero note</label><input id="heroNote" value="${esc(data.site.heroNote)}"></div>
+<div class="field"><label>Homepage intro</label><textarea id="intro">${esc(data.site.intro)}</textarea></div>
+<div class="field"><label>About me</label><textarea id="aboutText">${esc(data.site.about)}</textarea></div></div>
+<button class="btn" onclick="saveSite()">Save site settings</button>
+<hr style="border:0;border-top:1px solid var(--line);margin:35px 0">
+<h3>Add / edit posts</h3><div id="postForm"></div><div class="editor-list" id="editorList"></div></div>`;
+document.body.appendChild(e);showPostForm();renderEditorList();
+}
+function showPostForm(id=null){
+let p=id?data.posts.find(x=>x.id===id):{id:"",cat:"Physics",title:"",excerpt:"",date:"",image:"",body:""};
+document.getElementById("postForm").innerHTML=`<div class="editor-grid">
+<div class="field"><label>Category</label><input id="pcat" value="${esc(p.cat)}"></div><div class="field"><label>Date</label><input id="pdate" value="${esc(p.date)}"></div>
+<div class="field"><label>Title</label><input id="ptitle" value="${esc(p.title)}"></div><div class="field"><label>Image URL (optional)</label><input id="pimage" value="${esc(p.image)}"></div>
+<div class="field"><label>Short description</label><textarea id="pexcerpt">${esc(p.excerpt)}</textarea></div><div class="field"><label>Article text</label><textarea id="pbody">${esc(p.body)}</textarea></div></div>
+<button class="btn" onclick="savePost(${p.id||0})">${id?"Update":"Add"} post</button> ${id?`<button class="btn secondary" onclick="showPostForm()">Cancel</button>`:""}`;
+}
+function saveSite(){data.site.tagline=document.getElementById("tagline").value;data.site.heroNote=document.getElementById("heroNote").value;data.site.intro=document.getElementById("intro").value;data.site.about=document.getElementById("aboutText").value;save();document.getElementById("editor").remove();render()}
+function savePost(id){
+let p={id:id||Date.now(),cat:pcat.value.trim()||"Uncategorised",date:pdate.value.trim(),title:ptitle.value.trim()||"Untitled",image:pimage.value.trim(),excerpt:pexcerpt.value.trim(),body:pbody.value.trim()};
+if(id){let i=data.posts.findIndex(x=>x.id===id);data.posts[i]=p}else data.posts.unshift(p);save();showPostForm();renderEditorList();render();
+}
+function renderEditorList(){document.getElementById("editorList").innerHTML=data.posts.map(p=>`<div class="edit-row"><div><strong>${esc(p.title)}</strong><div class="meta">${esc(p.cat)}</div></div><div><button class="btn secondary" onclick="showPostForm(${p.id})">Edit</button> <button class="btn danger" onclick="deletePost(${p.id})">Delete</button></div></div>`).join("")}
+function deletePost(id){if(confirm("Delete this post?")){data.posts=data.posts.filter(p=>p.id!==id);save();renderEditorList();render();}}
+checkAdminUnlock();
+render();
+
+</script>
+</body>
+</html>
