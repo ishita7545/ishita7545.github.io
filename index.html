@@ -46,6 +46,50 @@ history.replaceState({},"",location.pathname+location.hash);
 }
 }
 function logoutAdmin(){localStorage.removeItem(ADMIN_KEY);document.getElementById("editor")?.remove();render();}
+async function exportSite(){
+try{
+let res=await fetch(location.pathname+location.search,{cache:"no-store"});
+if(!res.ok)throw new Error("Could not read the current page (HTTP "+res.status+")");
+let html=await res.text();
+let m=html.match(/const starter=\{[\s\S]*?\]\};/);
+if(!m)throw new Error("Could not find the site data in this page's source.");
+let updated=html.replace(m[0],"const starter="+JSON.stringify(data)+";");
+let blob=new Blob([updated],{type:"text/html"});
+let url=URL.createObjectURL(blob);
+let a=document.createElement("a");a.href=url;a.download="index.html";document.body.appendChild(a);a.click();a.remove();
+URL.revokeObjectURL(url);
+alert("Downloaded index.html with your latest changes baked in. Upload this file to your GitHub repo (replacing the old index.html) so everyone — including your phone — sees these changes.");
+}catch(err){
+alert("Couldn't export automatically: "+err.message);
+}
+}
+function importSiteFile(input){
+let file=input.files[0];
+if(!file)return;
+let reader=new FileReader();
+reader.onload=function(){
+try{
+let text=reader.result;
+let obj;
+if(text.trim().startsWith("{")){
+obj=JSON.parse(text);
+}else{
+let m=text.match(/const starter=(\{[\s\S]*?\]\});/);
+if(!m)throw new Error("Could not find site data in this file.");
+obj=JSON.parse(m[1]);
+}
+if(!obj||!obj.site||!obj.posts)throw new Error("This file doesn't look like a valid site data file.");
+data=obj;save();
+alert("Import successful. This browser now shows the imported content.");
+document.getElementById("editor")?.remove();
+render();
+}catch(err){
+alert("Import failed: "+err.message);
+}
+};
+reader.readAsText(file);
+input.value="";
+}
 function getPostIdFromURL(){
 let id=new URLSearchParams(location.search).get("post");
 return id?Number(id):null;
@@ -81,6 +125,14 @@ document.getElementById("app").innerHTML=`
 function openEditor(){
 let e=document.createElement("div");e.className="editor";e.id="editor";
 e.innerHTML=`<div class="editor-inner"><div class="editor-top"><div><div class="eyebrow">Site editor</div><h2>Edit The Why Behind</h2></div><div style="display:flex;gap:10px"><button class="btn secondary" onclick="logoutAdmin()">Log out of admin</button><button class="btn secondary" onclick="document.getElementById('editor').remove()">Close</button></div></div>
+<div style="background:var(--paper);border:1px solid var(--line);border-radius:15px;padding:20px;margin-bottom:30px">
+<h3 style="margin-bottom:8px">Publish your changes</h3>
+<p style="color:var(--muted);font-size:14px;margin:0 0 15px">Edits here only save to this browser. To make them visible everywhere (including your phone), export the updated file and upload it to GitHub, replacing the old one.</p>
+<div style="display:flex;gap:10px;flex-wrap:wrap">
+<button class="btn" onclick="exportSite()">⬇ Export updated site file</button>
+<label class="btn secondary" style="display:inline-flex;align-items:center;cursor:pointer">Import site file<input type="file" accept=".html,.json" onchange="importSiteFile(this)" style="display:none"></label>
+</div>
+</div>
 <h3>Site settings</h3><div class="editor-grid">
 <div class="field"><label>Site tagline</label><input id="tagline" value="${esc(data.site.tagline)}"></div>
 <div class="field"><label>Hero note</label><input id="heroNote" value="${esc(data.site.heroNote)}"></div>
